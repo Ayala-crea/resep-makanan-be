@@ -83,18 +83,25 @@ func LoginUser(c *fiber.Ctx) error {
 		})
 	}
 
-	// Get role information
-	role, err := repo.GetUserByRoleId(db, userData.IdRole)
+	// Get detailed user data by ID
+	detailedUserData, err := repo.GetUserDataById(db, userData.IdUser)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Failed to retrieve role",
+			"message": "Failed to retrieve user data",
 		})
 	}
 
-	// Return successful response with token and role data
+	// Return successful response with token and user data
 	return c.JSON(fiber.Map{
 		"token": token,
-		"role":  role,
+		"user": fiber.Map{
+			"id_user": detailedUserData.IdUser,
+			"id_role": detailedUserData.IdRole,
+			"nama": detailedUserData.Nama,
+			"username": detailedUserData.Username,
+			"email": detailedUserData.Email,
+			// Add more user details here as needed
+		},
 	})
 }
 
