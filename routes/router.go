@@ -20,6 +20,10 @@ func SetupTaskRoutes(app *fiber.App) {
 	app.Delete("receipe/delete", controller.DeleteReceipt)
 	app.Get("/resep/user", controller.GetReceiptByUser)
 
+	app.Get("/users", controller.GetAllUser)
+	app.Post("/users", controller.CreateUser)
+	app.Get("/users/Get", controller.GetByIdUser)
+
 	// app.Get("/tasks", controller.GetAllTask)
 	// app.Get("/task/get", controller.GetTaskById)
 	// app.Get("/task/taskuser", controller.GetTaskByIdUser)
