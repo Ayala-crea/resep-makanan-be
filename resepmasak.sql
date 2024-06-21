@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2024 at 05:56 PM
+-- Generation Time: Jun 21, 2024 at 01:17 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -33,6 +33,14 @@ CREATE TABLE `categories` (
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `name`, `description`) VALUES
+(1, 'makanan manis', 'masakan makanan manis'),
+(2, 'makanan berkuah', 'makanan yang memiliki kuah');
+
 -- --------------------------------------------------------
 
 --
@@ -48,15 +56,18 @@ CREATE TABLE `receipt` (
   `instructions` text DEFAULT NULL,
   `img` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `receipt`
 --
 
-INSERT INTO `receipt` (`recipe_id`, `id_user`, `title`, `description`, `ingredients`, `instructions`, `img`, `created_at`, `updated_at`) VALUES
-(2, 2, 'Resep Baru', 'Deskripsi Resep', 'Bahan-bahan', NULL, './img/1717863247627830000_Screenshot (8).png', '2024-06-08 23:14:07', '2024-06-08 23:14:07');
+INSERT INTO `receipt` (`recipe_id`, `id_user`, `title`, `description`, `ingredients`, `instructions`, `img`, `created_at`, `updated_at`, `category_id`) VALUES
+(1, 5, 'nasi goreng', 'masakan', 'bawang', 'bawang', 'bawang.jpg', '2024-06-20 13:25:58', '2024-06-20 13:26:40', 1),
+(3, 6, 'Nasi Goreng Banglades', 'Masakan Khas Indonesia dengan cita rasa yang special', 'bawang 3 suing, gula, garam, kecap, cabe, telor', 'siapkan bahan bahan masak, masukan minyak, blendir semua bahan bahan, masukan telor ke wajan yang sudah panas, masukan bumbu yang sudah dihaluskan, oseng oseng sampai bau nya harum, kemudia masukkan nasi yang sudah disiapkan, aduk merata dengan bumbu yang tadi dimasukkan, tambahkan kecap, sajikan', './img/1718866967566303600_tes.jpeg', '2024-06-20 14:02:47', '2024-06-20 14:02:47', NULL),
+(7, 6, 'Nasi Goreng Banglades', 'Masakan Khas Indonesia dengan cita rasa yang special', 'bawang 3 suing, gula, garam, kecap, cabe, telor', 'siapkan bahan bahan masak, masukan minyak, blendir semua bahan bahan, masukan telor ke wajan yang sudah panas, masukan bumbu yang sudah dihaluskan, oseng oseng sampai bau nya harum, kemudia masukkan nasi yang sudah disiapkan, aduk merata dengan bumbu yang tadi dimasukkan, tambahkan kecap, sajikan', './img/1718966444926079500_tes.jpeg', '2024-06-21 17:40:44', '2024-06-21 17:40:44', 2);
 
 -- --------------------------------------------------------
 
@@ -109,7 +120,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `id_role`, `nama`, `username`, `password`, `email`, `created_at`) VALUES
-(2, 2, 'ahmad rifki ayala', 'ayala123', '$2a$10$UvY5WjtwoQhOYFz0T79kS.6fePVSTNJvaEQe0jH1x.CWKe2xNcqny', 'ayalarifki@gmail.com', '2024-06-08 08:55:38');
+(5, 2, 'Indah Diva Panjaitan', 'Indah123', '$2a$10$.LFahZYMlNY3zwBeACcfRujeQWNea9NvhT5hQurYdQB3wN8Z7Zn7G', 'indahpanjaitan889@gmail.com', '2024-06-20 08:04:40'),
+(6, 2, 'Friska Mayldiana', 'friska123', '$2a$10$m5XKm3gc7cUdhtIHbsaFOO2AEwvP2RcO1ZcTRXuQG5DR0kEqmg52u', 'friska123@gmail.com', '2024-06-20 14:01:26');
 
 --
 -- Indexes for dumped tables
@@ -127,7 +139,8 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `receipt`
   ADD PRIMARY KEY (`recipe_id`),
-  ADD KEY `idx_user_id` (`id_user`);
+  ADD KEY `idx_user_id` (`id_user`),
+  ADD KEY `idx_category_id` (`category_id`);
 
 --
 -- Indexes for table `recipe_categories`
@@ -158,13 +171,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `receipt`
 --
 ALTER TABLE `receipt`
-  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -176,7 +189,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -186,7 +199,8 @@ ALTER TABLE `users`
 -- Constraints for table `receipt`
 --
 ALTER TABLE `receipt`
-  ADD CONSTRAINT `receipt_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE;
+  ADD CONSTRAINT `receipt_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
+  ADD CONSTRAINT `receipt_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `recipe_categories`

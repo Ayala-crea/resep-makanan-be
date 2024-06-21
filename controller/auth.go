@@ -22,6 +22,14 @@ func RegisterUser(c *fiber.Ctx) error {
 		})
 	}
 
+	// Cek apakah email sudah digunakan
+	existingUser := new(model.Users)
+	if err := db.Where("email = ?", user.Email).First(existingUser).Error; err == nil {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+			"message": "Email sudah terdaftar",
+		})
+	}
+
 	// Menyimpan user ke database menggunakan repository
 	if err := repo.CreateUser(db, &user); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

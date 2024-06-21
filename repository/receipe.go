@@ -50,3 +50,11 @@ func GetReceiptByUser(db *gorm.DB, id uint) ([]model.Receipt, error) {
 	}
 	return receipts, nil
 }
+
+func GetReceipeByIdCategory(db *gorm.DB, id string) ([]model.Receipt, error) {
+	var receipt []model.Receipt
+	if err := db.Find(&receipt, "category_id = ?", id).Error; err != nil {
+		return nil, err
+	}
+	return receipt, nil
+}

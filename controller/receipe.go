@@ -5,6 +5,7 @@ import (
 	repo "Ayala-Crea/ResepBe/repository"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -13,13 +14,13 @@ import (
 )
 
 func CreateReceipe(c *fiber.Ctx) error {
-	// cek token header auth
+	// Cek token header auth
 	tokenStr := c.Get("login")
 	if tokenStr == "" {
 		return fiber.NewError(fiber.StatusBadRequest, "Header tidak ada")
 	}
 
-	// parse untuk mendapatkan id
+	// Parse untuk mendapatkan id
 	token, err := jwt.ParseWithClaims(tokenStr, &model.JWTClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte("secret_key"), nil // Ganti "secret_key" dengan kunci rahasia Anda
 	})
@@ -57,13 +58,28 @@ func CreateReceipe(c *fiber.Ctx) error {
 	receipe.Image = imagePath
 	receipe.IdUser = int(idUser)
 
+	// Ambil category_id dari form-data secara manual
+	categoryIDStr := c.FormValue("category_id")
+	if categoryIDStr == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Category ID tidak boleh kosong"})
+	}
+
+	// Konversi category_id dari string ke int
+	categoryID, err := strconv.Atoi(categoryIDStr)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Category ID tidak valid"})
+	}
+
+	// Set category_id di model
+	receipe.IdCategory = categoryID
+
 	db := c.Locals("db").(*gorm.DB)
 
 	if err := repo.InsertReceipt(db, receipe); err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"code": http.StatusCreated, "success": true, "status": "success", "message": "Task berhasil disimpan", "data": receipe})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{"code": http.StatusCreated, "success": true, "status": "success", "message": "Resep berhasil disimpan", "data": receipe})
 }
 
 func GetAllReceipe(c *fiber.Ctx) error {
@@ -233,4 +249,20 @@ func GetReceiptByUser(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{"code": http.StatusOK, "success": true, "status": "success", "data": receipts})
+}
+
+func GetReceiptByIdCategory(c *fiber.Ctx) error{
+	
+	idCategoryStr := c.Query("category_id")
+	if idCategoryStr == "" {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "ID category tidak boleh kosong"})
+	}
+	db := c.Locals("db").(*gorm.DB)
+
+	receipt, err := repo.GetReceipeByIdCategory(db, idCategoryStr)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Gagal mengambil data"})
+	}
+
+	return c.JSON(fiber.Map{"code": http.StatusOK, "success": true, "status": "success", "data": receipt})
 }

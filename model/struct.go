@@ -35,6 +35,7 @@ type Receipt struct {
 	Ingredients  string    `gorm:"column:ingredients" json:"ingredients"`
 	Instructions string    `gorm:"column:instructions" json:"instructions"`
 	Image        string    `gorm:"column:img"`
+	IdCategory   int       `gorm:"column:category_id" json:"category_id"`
 	CreatedAt    time.Time `gorm:"column:created_at;autoCreateTime" json:"-"`
 	UpdatedAt    time.Time `gorm:"column:updated_at;autoUpdateTime" json:"-"`
 }
@@ -49,4 +50,10 @@ type AdminReceipt struct {
 	Image       string    `gorm:"column:img"`
 	CreatedAt   time.Time `gorm:"column:created_at;autoCreateTime" json:"-"`
 	UpdatedAt   time.Time `gorm:"column:updated_at;autoUpdateTime" json:"-"`
+}
+
+type Categories struct {
+	IdCategory  int    `gorm:"primaryKey;column:category_id" json:"category_id"`
+	Name        string `gorm:"column:name" json:"name"`
+	Description string `gorm:"column:description" json:"description"`
 }

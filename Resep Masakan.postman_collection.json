@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "d4e49d3c-0abb-4a65-a821-46a2ec161f23",
+		"name": "Resep Masakan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "31681870",
+		"_collection_link": "https://umkm-ai.postman.co/workspace/My-Workspace~06877cde-77c2-4385-85d5-b57402ee4354/collection/31681870-d4e49d3c-0abb-4a65-a821-46a2ec161f23?action=share&source=collection_link&creator=31681870"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nama\": \"Friska Mayldiana\",\r\n    \"username\": \"friska123\",\r\n    \"Password\": \"friska123\",\r\n    \"email\": \"friska123@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/register"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc4MzM4MDMsImlkX3VzZXIiOjIsImlkX3JvbGUiOjJ9.cI4xvYUfoGfAxxpIk_2z9BSr5xrxSIY_LOCqzpXdvQY",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"friska123\",\r\n    \"Password\": \"friska123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/login"
+			},
+			"response": []
+		},
+		{
+			"name": "create resep",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg5Njk3NTAsImlkX3VzZXIiOjYsImlkX3JvbGUiOjJ9.6xIgFQhZHYyUgBFZftk8H4AzEFJmqRRKbZH7aX8Ht6E",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Nasi Goreng Banglades",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Masakan Khas Indonesia dengan cita rasa yang special",
+							"type": "text"
+						},
+						{
+							"key": "ingredients",
+							"value": "bawang 3 suing, gula, garam, kecap, cabe, telor",
+							"type": "text"
+						},
+						{
+							"key": "instructions",
+							"value": "siapkan bahan bahan masak, masukan minyak, blendir semua bahan bahan, masukan telor ke wajan yang sudah panas, masukan bumbu yang sudah dihaluskan, oseng oseng sampai bau nya harum, kemudia masukkan nasi yang sudah disiapkan, aduk merata dengan bumbu yang tadi dimasukkan, tambahkan kecap, sajikan",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "postman-cloud:///1ef2ed30-7975-44b0-93d0-b29bc81adb60"
+						},
+						{
+							"key": "category_id",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://127.0.0.1:3000/receipe"
+			},
+			"response": []
+		},
+		{
+			"name": "get all resep",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg5Njk3NTAsImlkX3VzZXIiOjYsImlkX3JvbGUiOjJ9.6xIgFQhZHYyUgBFZftk8H4AzEFJmqRRKbZH7aX8Ht6E",
+						"type": "text"
+					}
+				],
+				"url": "http://127.0.0.1:3000/receipe"
+			},
+			"response": []
+		},
+		{
+			"name": "get resep by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgzMDIxNDMsImlkX3VzZXIiOjIsImlkX3JvbGUiOjJ9.uOrItDO85og2lMCtsYPcmyFzGswM4Au8hQs7lhSDOMg",
+						"type": "text"
+					},
+					{
+						"key": "ID",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/receipe/get?recipe_id=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"receipe",
+						"get"
+					],
+					"query": [
+						{
+							"key": "LOGIN",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgzMDIxNDMsImlkX3VzZXIiOjIsImlkX3JvbGUiOjJ9.uOrItDO85og2lMCtsYPcmyFzGswM4Au8hQs7lhSDOMg",
+							"disabled": true
+						},
+						{
+							"key": "recipe_id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete resep",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTc4NjU4ODQsImlkX3VzZXIiOjIsImlkX3JvbGUiOjJ9.Qr9B_-tr2gSfUMVLil6nowCGcaMNWbwQKGOK7IE3FAg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/receipe/delete?recipe_id=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"receipe",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "recipe_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update resep",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "login",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Updated Title",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Updated Description",
+							"type": "text"
+						},
+						{
+							"key": "ingredients",
+							"value": "Updated Ingredients",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/user/new_image.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/receipe/update?recipe_id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"receipe",
+						"update"
+					],
+					"query": [
+						{
+							"key": "recipe_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get resep by user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgzMDUwNDEsImlkX3VzZXIiOjIsImlkX3JvbGUiOjJ9.86cPKvJw0CaOgnAE5LwOAPK_8xKyPLC8wcQ4PDz15kM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/resep/user",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"resep",
+						"user"
+					],
+					"query": [
+						{
+							"key": "recipe_id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgzNzc4NTcsImlkX3VzZXIiOjMsImlkX3JvbGUiOjF9.KSYDO3UZjjX2EaA1wuDkDRpy2LxExkKVDHgsSifmyw4",
+						"type": "text"
+					}
+				],
+				"url": "http://127.0.0.1:3000/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Users Admin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgzNzY4NjEsImlkX3VzZXIiOjMsImlkX3JvbGUiOjF9.7qeKRwlL5vNvjdQtmpyl8cduVAjbFsFgmF6t_DFao-w",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_role\": 1,\r\n    \"nama\": \"Muhammad Qinthar\",\r\n    \"username\": \"Qinthar123\",\r\n    \"Password\": \"Qinthar123\",\r\n    \"email\": \"Qinthar123@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTgzNzc4NTcsImlkX3VzZXIiOjMsImlkX3JvbGUiOjF9.KSYDO3UZjjX2EaA1wuDkDRpy2LxExkKVDHgsSifmyw4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/users/Get?id_user=4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"Get"
+					],
+					"query": [
+						{
+							"key": "id_user",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get categori",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg4NDg1NjAsImlkX3VzZXIiOjMsImlkX3JvbGUiOjF9.7MIJeLWtngLI89slCQiTkUDmTsoO5uZsdwx2U6yaD8c",
+						"type": "text"
+					}
+				],
+				"url": "http://127.0.0.1:3000/categori"
+			},
+			"response": []
+		},
+		{
+			"name": "create category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "LOGIN",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg4NDg1NjAsImlkX3VzZXIiOjMsImlkX3JvbGUiOjF9.7MIJeLWtngLI89slCQiTkUDmTsoO5uZsdwx2U6yaD8c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"makanan berkuah\",\r\n    \"description\": \"makanan yang memiliki kuah\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/category"
+			},
+			"response": []
+		},
+		{
+			"name": "get category by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/category/id?category_id=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"category",
+						"id"
+					],
+					"query": [
+						{
+							"key": "category_id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get resep by id category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/resep/category?category_id=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"resep",
+						"category"
+					],
+					"query": [
+						{
+							"key": "category_id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
